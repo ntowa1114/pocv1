@@ -15,14 +15,27 @@ function readBody(req){
     });
 }
 
+//指定したファイルをディスクから読んで、そのままブラウザに返す
+function serve(res, file, ct){ //ct:Content-Type
+    //__dirname→このserver.jsがあるフォルダ　path.joinでフルパス
+    fs.readFile(path.join(__dirname, file),(err, buf) => {
+        if(err){
+            res.writeHead(404);
+            res.end('file no found');
+            return;
+        }
+        res.writeHead(200,{'Content-Type': ct});
+        res.end(buf);
+    })
+}
+
 //加盟店サーバー
 http.createServer(async (req, res) => {
     console.log(`受信: ${req.method} ${req.url}`); //ログ
 
     if(req.method === 'GET' && req.url=='/'){
-        res.writeHead(200,{'Content-Type': 'text/plain; charset=utf-8'});
-        res.end('ここはmerchantのトップ');
-        return;
+        
+        return serve(res, 'merchant.html', 'text/html');
     }
 
     if(req.method == 'POST' && req.url =='/pay'){

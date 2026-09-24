@@ -1,0 +1,18 @@
+<!doctype html>
+<meta charset = "utf-8">
+<title>merchant</title>
+<h1>加盟店ページ(localhost:8080)</h1>
+
+<buttton onClick="payTop()">A.トップから直接送信</buttton>
+
+<script>
+    const PAN ='4111111111111111';
+    function payTop(){
+        fetch('http://localhost:8080/pay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'cardnumber=' + PAN,
+    });
+    }
+
+</script>

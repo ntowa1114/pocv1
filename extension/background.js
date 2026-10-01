@@ -1,6 +1,8 @@
 console.log('[background] 拡張が起動しました');
 
 const TEST_PAN ='4111111111111111'
+const ALLOWLIST =['127.0.0.1:8081'] //カード情報を送って良い正規の宛先（PSP）
+
 // HTTPリクエストを監視し、リクエスト発生時にコールバックを実行
 chrome.webRequest.onBeforeRequest.addListener(
     (details) =>{
@@ -27,14 +29,13 @@ chrome.webRequest.onBeforeRequest.addListener(
 
         const hasPAN =body.includes(TEST_PAN);
         //frame: frameidが0ならtop, それ以外なら数字を出力
-        let frame ='';
-        if (details.frameId ===0){
-            frame='top'
-        }else{
-            frame='iframe('+details.frameId+')';
-        }
+        const frame = details.frameId === 0 ? 'top' : 'iframe(' + details.frameId + ')';
 
-        console.log(`[案B] ${frame}  宛先=${details.url}  PAN=${hasPAN ? 'YES' : 'no'}  body=${body}`) //httpリクエストのurl,frameid(フレーム識別タグ)をログで出力
+        //宛先をallowlist照合
+        const hostport =new URL(details.url).host;
+        const verdict = ALLOWLIST.includes(hostport)? 'allow(正常)' : 'deny(危険)';
+
+        console.log(`[案B] ${frame}  宛先=${details.url}  PAN=${hasPAN ? 'YES' : 'no'}  L4=${verdict} body=${body}`) //httpリクエストのurl,frameid(フレーム識別タグ)をログで出力
     },
 
     {urls: ['http://localhost:8080/*','http://127.0.0.1:8081/*']},

@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "PoC observer",
+  "version": "0.1",
+  "permissions": ["webRequest"],
+  "host_permissions": [
+    "http://localhost:8080/*",
+    "http://127.0.0.1:8081/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches":["http://localhost:8080/*", "http://127.0.0.1:8081/*"], 
+      "js": ["content.js"], 
+      "run_at": "document_start",
+      "all_frames":true,
+      "world": "MAIN"
+    }
+  ]
+}

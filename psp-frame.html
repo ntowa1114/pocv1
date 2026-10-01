@@ -1,0 +1,20 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>psp frame</title>
+
+<b>PSP iframe (127.0.0.1:8081)</b><br> <!--bは強調文字-->
+<button onclick="charge()">B. iframeから送信</button>
+
+<script>
+    const PAN = '4111111111111111';
+    function charge(){
+        console.log("charge関数が叩かれました");
+        fetch('http://127.0.0.1:8081/charge',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'cardnumber=' + PAN,
+            
+        });
+
+    }
+</script>

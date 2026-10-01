@@ -57,6 +57,9 @@ http.createServer(async (req, res) => {
 
 http.createServer(async (req,res) =>{
     console.log(`受信(PSP): ${req.method} ${req.url}`);
+    if(req.method === 'GET' && req.url === '/frame'){
+        return serve(res, 'psp-frame.html', 'text/html');
+    }
     if (req.method === 'POST' && req.url === '/charge'){
         const body = await readBody(req)
         const hasPAN = body.includes(TEST_PAN);

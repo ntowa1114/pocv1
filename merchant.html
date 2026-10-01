@@ -3,12 +3,17 @@
 <title>merchant</title>
 <h1>加盟店ページ(localhost:8080)</h1>
 
-<buttton onClick="payTop()">A.トップから直接送信</buttton>
+<button onclick="payTop()">A.トップから直接送信</button>
+
+<!--iframe型-->
+<h3>PSP iframe(127.0.0.1:8081)</h3>
+<iframe src="http://127.0.0.1:8081/frame" style="width:340px;height:120px"></iframe>
 
 <script>
     const PAN ='4111111111111111';
     function payTop(){
-        fetch('http://localhost:8080/pay', {
+      console.log("payTop関数が叩かれました");
+      fetch('http://localhost:8080/pay', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: 'cardnumber=' + PAN,

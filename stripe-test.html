@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Stripe Elements(test mode)</title>
+<h1>加盟店ページ+Stripe Elements (test mode)</h1>
+
+<script></script>
+
+<div id="card-element"></div>
+<button id="payBtn">トークン化する</button>
+<pre></pre>
+
+<script>
+    //stripeの公開可能キー
+    const stripe =Stripe('pk_test_51UMzvsICMJOnrW1l5Jca1l3bae4NxPHHi61NPq5MK4BzvpeR4YEZviDmUXZHj6lI1X8jS2aNOTar5P8wOBFWKGYw00J1o6Fvgg');
+    //js.stripe.com 由来の別オリジンiframe
+    const elements = stripe.elements();
+    const card = elements.create('card');
+    card.mount('#card-element');
+    //document.getElementById: 指定したid属性に一致するHTML要素を1つだけ取得する
+    document.getElementById('payBtn').addEventListener('click', async() => {
+        
+    });
+</script>

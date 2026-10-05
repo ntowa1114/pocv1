@@ -32,10 +32,15 @@ function serve(res, file, ct){ //ct:Content-Type
 //加盟店サーバー
 http.createServer(async (req, res) => {
     console.log(`受信: ${req.method} ${req.url}`); //ログ
-
+    
     if(req.method === 'GET' && req.url=='/'){
         
         return serve(res, 'merchant.html', 'text/html');
+    }
+
+    //Stripe Elementsテストページ
+    if(req.method == 'GET' && req.url==='/stripe-test.html'){
+        return serve(res, 'stripe-test.html','test/html');
     }
 
     if(req.method == 'POST' && req.url =='/pay'){

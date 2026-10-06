@@ -40,7 +40,7 @@ http.createServer(async (req, res) => {
 
     //Stripe Elementsテストページ
     if(req.method == 'GET' && req.url==='/stripe-test.html'){
-        return serve(res, 'stripe-test.html','test/html');
+        return serve(res, 'stripe-test.html','text/html');
     }
 
     if(req.method == 'POST' && req.url =='/pay'){

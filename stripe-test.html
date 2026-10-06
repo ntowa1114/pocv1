@@ -3,21 +3,32 @@
 <title>Stripe Elements(test mode)</title>
 <h1>加盟店ページ+Stripe Elements (test mode)</h1>
 
-<script></script>
+<script src="https://js.stripe.com/v3/"></script>></script>
 
-<div id="card-element"></div>
+<div id="card-element" style="max-width:360px;padding:10px;border:1px solid #ccc"></div>
 <button id="payBtn">トークン化する</button>
-<pre></pre>
+<pre id ="result"></pre>
 
 <script>
     //stripeの公開可能キー
     const stripe =Stripe('pk_test_51UMzvsICMJOnrW1l5Jca1l3bae4NxPHHi61NPq5MK4BzvpeR4YEZviDmUXZHj6lI1X8jS2aNOTar5P8wOBFWKGYw00J1o6Fvgg');
+    
     //js.stripe.com 由来の別オリジンiframe
     const elements = stripe.elements();
     const card = elements.create('card');
     card.mount('#card-element');
+
     //document.getElementById: 指定したid属性に一致するHTML要素を1つだけ取得する
     document.getElementById('payBtn').addEventListener('click', async() => {
-        
+
+        //id="result" が指定されているHTML要素を探して取得
+        const out =document.getElementById('result');
+        out.textContent ='送信中...';
+
+        //stripe.createToken(card) でStripeにカード情報を送る
+        const {token,error} =await stripe.createToken(card);
+
+        //成功した場合: #result に「token: トークンID」を表示
+        out.textContent = error ? ('error: '+error.message):('token: '+token.id);
     });
 </script>
